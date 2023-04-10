@@ -1,0 +1,188 @@
+/****** GENERAL ******/
+
+*:focus{
+    outline: none;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+h2 {
+    font-size: 18px !important;
+    font-weight: 400 !important;
+    max-width: 230px;
+}
+
+#search-bar, 
+input,
+#button-addon2:hover,
+.card-body {
+    background-color: #E7E7E7;
+    
+}
+
+/****** SEARCH ******/
+
+#search-bar {
+    height: 69px;
+}
+
+input {
+    width: 96%;
+}
+
+input:focus {
+    outline: none;
+}
+
+#button-addon2 {
+    width: 4%;
+}
+
+/****** FILTERS ******/
+
+#filters {
+    width: 500px;
+    min-width: 300px;
+    margin-bottom: 50px;
+}
+
+/****** RECIPE CARD ******/
+
+.recipe-card {
+    height: 420px !important;
+    width: 32% !important;
+}
+
+.recipe-card__description {
+    font-size: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.ingredients-list {
+    padding: 0px;
+}
+
+.ingredients-list li{
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.dropdown-btn {
+    color: white;
+    padding: 10px 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.inputSearch {
+    box-sizing: border-box;
+    background-color: transparent;
+    font-size: 16px;
+    padding: 15px 0px;
+    border: none;
+    color: #ffffff;
+}
+
+.inputSearch::placeholder {
+    color: #ffffffc4;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+#ingredient-select,  
+#appareil-select,
+#ustensile-select {
+    display: none;
+    position: absolute;
+    max-width: 1000px;
+    border: 1px solid #ddd;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 12px;
+    z-index: 1;
+}
+
+.select-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+.select-list a {
+    width: 200px;
+}
+
+
+.show {
+    display: block !important;
+}
+
+a{
+    display: block;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+a:hover {
+    opacity: .8;
+}
+
+/****** TAGS ******/
+
+#tags-section {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 5px;
+    max-width: 100%;
+}
+
+
+#tags-section > a{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#tags-section > a > i{
+    margin-left: 5px;
+
+}    
+
+.bg-blue {
+    background-color: #3282F7;
+}
+
+.bg-green {
+    background-color: #68D9A4;
+}
+
+.bg-red {
+    background-color: #ED6454;
+}
+
+
+@media (min-width: 992px) {
+    .container, .container-lg, .container-md, .container-sm {
+        max-width: 1200px !important;
+    }
+} 
