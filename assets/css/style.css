@@ -23,7 +23,7 @@ input,
 #button-addon2:hover,
 .card-body {
     background-color: #E7E7E7;
-    
+    flex-wrap: nowrap !important;
 }
 
 /****** SEARCH ******/
@@ -180,9 +180,45 @@ a:hover {
     background-color: #ED6454;
 }
 
+@media (max-width: 767px) {
+    #recipes-section {
+        flex-direction: column !important;
+        margin: 0px;
+    }
+
+    .card {
+        width: 100% !important;
+    }
+
+    #filters {
+        width: 100%;
+    }
+
+    .select-list {
+        grid-template-columns: 100%;
+    }
+} 
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .card {
+        width: 48.5% !important;
+    }
+
+    .select-list {
+        grid-template-columns: 50% 50%;
+    }
+
+    #ingredient-select,  
+    #appareil-select,
+    #ustensile-select {
+        max-width: 350px;
+    }
+} 
 
 @media (min-width: 992px) {
     .container, .container-lg, .container-md, .container-sm {
         max-width: 1200px !important;
     }
 } 
+
+

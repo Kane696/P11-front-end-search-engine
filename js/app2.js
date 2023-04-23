@@ -85,18 +85,19 @@ function searchRecipes() {
     const searchBarInput = document.getElementById("search-bar__input");
     searchBarInput.addEventListener("keyup", (e) => {
         const query = e.target.value;
+        filteredRecipes = [];
         if(query.length >= 3) {
-            filteredRecipes = recipes.filter(recipe => {
-                if(recipe.name.toLowerCase().includes(query.toLowerCase())|| recipe.description.toLowerCase().includes(query.toLowerCase()) || recipe.ingredients.find((ingredient) => ingredient.ingredient.toLowerCase().includes(query.toLowerCase()))) {
-                    return recipe;
+            for(let i = 0; i < recipes.length; i++){
+                if(recipes[i].name.toLowerCase().includes(query.toLowerCase())|| recipes[i].description.toLowerCase().includes(query.toLowerCase()) || recipes[i].ingredients.find((ingredient) => ingredient.ingredient.toLowerCase().includes(query.toLowerCase()))) {
+                    filteredRecipes.push(recipes[i]);
                 }
-            });
+            }
         } else if(query.length < 3) {
-            filteredRecipes = recipes.filter(recipe => {
-                if(recipe.name.toLowerCase().includes(query.toLowerCase())|| recipe.description.toLowerCase().includes(query.toLowerCase()) || recipe.ingredients.find((ingredient) => ingredient.ingredient.toLowerCase().includes(query.toLowerCase()))) {
-                    return recipe;
+            for(let i = 0; i < recipes.length; i++){
+                if(recipes[i].name.toLowerCase().includes(query.toLowerCase())|| recipes[i].description.toLowerCase().includes(query.toLowerCase()) || recipes[i].ingredients.find((ingredient) => ingredient.ingredient.toLowerCase().includes(query.toLowerCase()))) {
+                    filteredRecipes.push(recipes[i]);
                 }
-            });
+            }
         } else {
             filteredRecipes = recipes;
         }
@@ -163,7 +164,7 @@ function displayTagsList(recipesArr) {
         const listItemLink = document.createElement("a");
         listItemLink.textContent = ingredient;
         listItemLink.addEventListener("click", (e) => {
-            addTag(e.currentTarget, "bg-blue", recipesArr);
+            addTag(e.currentTarget, "blue", recipesArr);
             removeTag(e.currentTarget, recipesArr);
             const closeBtn = document.createElement("i");
             closeBtn.classList.add("bi", "bi-x-circle");
@@ -176,7 +177,7 @@ function displayTagsList(recipesArr) {
         const listItemLink = document.createElement("a");
         listItemLink.textContent = ustensil;
         listItemLink.addEventListener("click", (e) => {
-            addTag(e.currentTarget, "bg-red", recipesArr);
+            addTag(e.currentTarget, "red", recipesArr);
             removeTag(e.currentTarget, recipesArr);
             const closeBtn = document.createElement("i");
             closeBtn.classList.add("bi", "bi-x-circle");
@@ -189,7 +190,7 @@ function displayTagsList(recipesArr) {
         const listItemLink = document.createElement("a");
         listItemLink.textContent = appliance;
         listItemLink.addEventListener("click", (e) => {
-            addTag(e.currentTarget, "bg-green", recipesArr);
+            addTag(e.currentTarget, "green", recipesArr);
             removeTag(e.currentTarget, recipesArr);
             const closeBtn = document.createElement("i");
             closeBtn.classList.add("bi", "bi-x-circle");
@@ -222,13 +223,13 @@ function removeTag(currentItem, recipesArr) {
 // Add tag to dom
 function addTag(currentItem, bgColor, recipesArr) {
     const tagsSection = document.getElementById("tags-section");
-    currentItem.classList.add(bgColor);
+    currentItem.style.backgroundColor = bgColor;
     tagsSection.appendChild(currentItem); 
     // Add current tag to array of tags
-    if(currentItem.classList.contains("bg-blue")) {
+    if(currentItem.style.backgroundColor === "blue") {
         currentItem.setAttribute("id", "ingredient");
         tags.ingredient.add(currentItem.textContent);
-    } else if(currentItem.classList.contains("bg-red")) {
+    } else if(currentItem.style.backgroundColor === "red") {
         currentItem.setAttribute("id", "ustensil");
         tags.ustensil.add(currentItem.textContent);
     } else { 
@@ -257,3 +258,5 @@ function searchByTags(tagSearchar, tagListItem, recipesArr) {
 searchRecipes();
 openDrodown(filteredRecipes);
 displayRecipes(filteredRecipes);
+
+
