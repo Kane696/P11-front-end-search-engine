@@ -44,8 +44,8 @@ function displayRecipes(recipesArr) {
             recipeTextUpContainer.classList.add("d-flex", "w-100", "justify-content-between");
             recipeTextDownContainer.classList.add("d-flex", "w-100", "justify-content-between");
             recipeDescriptionContainer.classList.add("w-50");
-            recipeTime.classList.add("d-flex");
-            timeIcon.classList.add("bi", "bi-clock", "me-1");
+            recipeTime.classList.add("d-flex", "fw-bold");
+            timeIcon.classList.add("fa-regular", "fa-clock", "me-1", "lh-base");
             recipeDescription.classList.add("recipe-card__description");
             recipeName.textContent = recipe.name;
             recipeTimeText.textContent = recipe.time + "min";
@@ -102,6 +102,7 @@ function searchRecipes() {
         }
         displayRecipes(filteredRecipes);
         getTagsList(filteredRecipes);
+        filterRecipesByTag(filteredRecipes);
     });
 }
 
@@ -109,29 +110,56 @@ function openDrodown(recipesArr) {
     const dropdownBtns = document.querySelectorAll(".dropdown-btn");
     const ingredientSelect = document.getElementById("ingredient-select");
     const ustensilSelect = document.getElementById("ustensile-select");
-    const appareilSelect = document.getElementById("appareil-select");
+    const applianceSelect = document.getElementById("appareil-select");
 
     dropdownBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             if(e.currentTarget.textContent === "Ingredients") {
+                closeDropdown(e.currentTarget, ingredientSearchBar.nextElementSibling, ingredientSelect);
+                e.currentTarget.parentElement.style.width = "70%";
+                e.currentTarget.style.display = "none";
                 ingredientSelect.classList.toggle('show');
-                appareilSelect.classList.remove('show');
-                ustensilSelect.classList.remove('show');
+                ingredientSearchBar.focus();
+                closeDropdown(applianceSelect.previousElementSibling, "undefined", applianceSelect);
+                closeDropdown(ustensilSelect.previousElementSibling, "undefined", ustensilSelect);
                 searchByTags(ingredientSearchBar, tagsList.ingredientList, recipesArr);
             } else if(e.currentTarget.textContent === "Appareils") {
-                appareilSelect.classList.toggle('show');
-                ingredientSelect.classList.remove('show');
-                ustensilSelect.classList.remove('show');
+                closeDropdown(e.currentTarget, applianceSearchBar.nextElementSibling, applianceSelect);
+                e.currentTarget.parentElement.style.width = "70%";
+                e.currentTarget.style.display = "none";
+                applianceSelect.classList.toggle('show');
+                applianceSearchBar.focus();
+                closeDropdown(ustensilSelect.previousElementSibling, "undefined", ustensilSelect);
+                closeDropdown(ingredientSelect.previousElementSibling, "undefined", ingredientSelect);
                 searchByTags(applianceSearchBar, tagsList.applianceList, recipesArr);
             } else if(e.currentTarget.textContent === "Ustensiles") {
-                ustensilSelect.classList.toggle('show');
-                ingredientSelect.classList.remove('show');
-                appareilSelect.classList.remove('show');
+                closeDropdown(e.currentTarget, ustensilSearchBar.nextElementSibling, ustensilSelect);
+                e.currentTarget.parentElement.style.width = "70%";
+                e.currentTarget.style.display = "none";
+                ustensilSelect.classList.add('show');
+                ustensilSearchBar.focus();
+                closeDropdown(ingredientSelect.previousElementSibling, "undefined", ingredientSelect);
+                closeDropdown(applianceSelect.previousElementSibling, "undefined", applianceSelect);
                 searchByTags(ustensilSearchBar, tagsList.ustensilList, recipesArr);
             }
         })
     });
     getTagsList(recipesArr);
+}
+
+function closeDropdown(selectBtn, arrowUpBtn, selectList) {
+    let myUp = arrowUpBtn || "undefined";
+    if(myUp === "undefined") {
+        selectBtn.style.display = "block";
+        selectList.classList.remove('show');
+        selectBtn.parentElement.style.width = "auto";
+    } else {
+        arrowUpBtn.addEventListener("click", () => {
+            selectBtn.style.display = "block";
+            selectList.classList.remove('show');
+            selectBtn.parentElement.style.width = "auto";
+        });
+    }
 }
 
 function clearTagsList(list) {
@@ -163,10 +191,12 @@ function displayTagsList(recipesArr) {
         const listItemLink = document.createElement("a");
         listItemLink.textContent = ingredient;
         listItemLink.addEventListener("click", (e) => {
+            // Close the list
+            closeDropdown(ingredientSelectList.parentElement.previousElementSibling, "undefined", ingredientSelectList.parentElement);
             addTag(e.currentTarget, "bg-blue", recipesArr);
             removeTag(e.currentTarget, recipesArr);
             const closeBtn = document.createElement("i");
-            closeBtn.classList.add("bi", "bi-x-circle");
+            closeBtn.classList.add("fa-regular", "fa-circle-xmark");
             listItemLink.appendChild(closeBtn);
         });
         ingredientSelectList.appendChild(listItemLink);
@@ -176,10 +206,12 @@ function displayTagsList(recipesArr) {
         const listItemLink = document.createElement("a");
         listItemLink.textContent = ustensil;
         listItemLink.addEventListener("click", (e) => {
+            // Close the list
+            closeDropdown(ustensilSelectList.parentElement.previousElementSibling, "undefined", ustensilSelectList.parentElement);
             addTag(e.currentTarget, "bg-red", recipesArr);
             removeTag(e.currentTarget, recipesArr);
             const closeBtn = document.createElement("i");
-            closeBtn.classList.add("bi", "bi-x-circle");
+            closeBtn.classList.add("fa-regular", "fa-circle-xmark");
             listItemLink.appendChild(closeBtn);
         });
         ustensilSelectList.appendChild(listItemLink);
@@ -189,10 +221,12 @@ function displayTagsList(recipesArr) {
         const listItemLink = document.createElement("a");
         listItemLink.textContent = appliance;
         listItemLink.addEventListener("click", (e) => {
+            // Close the list
+            closeDropdown(applianceSelectList.parentElement.previousElementSibling, "undefined", applianceSelectList.parentElement);
             addTag(e.currentTarget, "bg-green", recipesArr);
             removeTag(e.currentTarget, recipesArr);
             const closeBtn = document.createElement("i");
-            closeBtn.classList.add("bi", "bi-x-circle");
+            closeBtn.classList.add("fa-regular", "fa-circle-xmark");
             listItemLink.appendChild(closeBtn);
         });
         applianceSelectList.appendChild(listItemLink);
@@ -205,6 +239,7 @@ function filterRecipesByTag(recipesArr) {
             return recipe;
         }
     });
+    // Update taglist
     getTagsList(filteredRecipes);
     displayRecipes(filteredRecipes);
 }
