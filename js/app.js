@@ -91,12 +91,6 @@ function searchRecipes() {
                     return recipe;
                 }
             });
-        } else if(query.length < 3) {
-            filteredRecipes = recipes.filter(recipe => {
-                if(recipe.name.toLowerCase().includes(query.toLowerCase())|| recipe.description.toLowerCase().includes(query.toLowerCase()) || recipe.ingredients.find((ingredient) => ingredient.ingredient.toLowerCase().includes(query.toLowerCase()))) {
-                    return recipe;
-                }
-            });
         } else {
             filteredRecipes = recipes;
         }
@@ -234,8 +228,10 @@ function displayTagsList(recipesArr) {
 }
 
 function filterRecipesByTag(recipesArr) {
+    const searchBarInput = document.getElementById("search-bar__input");
     filteredRecipes = recipesArr.filter((recipe) => {
-        if((tags.ingredient.size == 0|| recipe.ingredients.find((ingredient) => [...tags.ingredient].includes(ingredient.ingredient.toLowerCase()))) && (tags.ustensil.size == 0|| recipe.ustensils.find((ustensil) => [...tags.ustensil].includes(ustensil.toLowerCase()))) && (tags.appliance.size == 0|| [...tags.appliance].includes(recipe.appliance.toLowerCase()))) {
+        let isSearched = recipe.name.toLowerCase().includes(searchBarInput.value.toLowerCase())|| recipe.description.toLowerCase().includes(searchBarInput.value.toLowerCase()) || recipe.ingredients.find((ingredient) => ingredient.ingredient.toLowerCase().includes(searchBarInput.value.toLowerCase()))
+        if((tags.ingredient.size == 0|| recipe.ingredients.find((ingredient) => [...tags.ingredient].includes(ingredient.ingredient.toLowerCase()))) && (tags.ustensil.size == 0|| recipe.ustensils.find((ustensil) => [...tags.ustensil].includes(ustensil.toLowerCase()))) && (tags.appliance.size == 0|| [...tags.appliance].includes(recipe.appliance.toLowerCase())) && isSearched) {
             return recipe;
         }
     });
